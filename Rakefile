@@ -6,8 +6,13 @@ Hoe.plugin :git     # `gem install hoe-git`
 
 GENERATED_PARSER = "lib/recma/generated_parser.rb"
 
+<<<<<<< HEAD
 HOE = Hoe.spec('recma') do |p|
+=======
+HOE = Hoe.spec('rkelly-remix') do |p|
+>>>>>>> cea7938 (Fork RKelly as "RKelly Remix".)
   developer('Aaron Patterson', 'aaron.patterson@gmail.com')
+  developer('Rene Saarsoo', 'rene.saarsoo@sencha.com')
   self.readme_file   = 'README.rdoc'
   self.history_file  = 'CHANGELOG.rdoc'
   self.extra_rdoc_files  = FileList['*.rdoc']

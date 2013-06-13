@@ -22,6 +22,8 @@
 
 === 0.0.1
 
-* Added dynamic method assignment
-* Birthday!
-
+* A fork of RKelly
+* 10x speedup of Tokenizer.
+* Full begin/end line/char info on each node.
+* List all comment nodes in root node instead of attempting to associate them with syntax nodes and failing at it.
+* Recognize /[/]/ as valid JS regex.

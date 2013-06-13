@@ -6,8 +6,6 @@
 
 The RECMA library will parse JavaScript and return a parse tree.
 
-== Example
-
   ##
   # Iterate over and modify a JavaScript AST.  Then print the modified
   # AST as JavaScript.
