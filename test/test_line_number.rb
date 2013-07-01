@@ -40,4 +40,28 @@ class LineNumberTest < NodeTestCase
     assert return_node
     assert_equal("<{line:6 char:9 (115)}...{line:6 char:21 (127)}>", return_node.range.to_s)
   end
+
+  def test_range_of_var_statement_with_semicolon
+    parser = RKelly::Parser.new
+    ast = parser.parse(<<-eojs)
+      var x = {
+        foo: 10,
+        bar: "blah"
+      };
+    eojs
+    stmt = ast.pointcut(VarStatementNode).matches.first
+    assert_equal("<{line:1 char:7 (6)}...{line:4 char:8 (60)}>", stmt.range.to_s)
+  end
+
+  def test_range_of_var_statement_without_semicolon
+    parser = RKelly::Parser.new
+    ast = parser.parse(<<-eojs)
+      var x = {
+        foo: 10,
+        bar: "blah"
+      }
+    eojs
+    stmt = ast.pointcut(VarStatementNode).matches.first
+    assert_equal("<{line:1 char:7 (6)}...{line:4 char:7 (59)}>", stmt.range.to_s)
+  end
 end
