@@ -64,4 +64,18 @@ class LineNumberTest < NodeTestCase
     stmt = ast.pointcut(VarStatementNode).matches.first
     assert_equal("<{line:1 char:7 (6)}...{line:4 char:7 (59)}>", stmt.range.to_s)
   end
+
+  def test_range_of_empty_function_body
+    parser = RKelly::Parser.new
+    ast = parser.parse(<<-eojs)
+      function f () {
+      }
+    eojs
+
+    stmt = ast.pointcut(FunctionDeclNode).matches.first
+    assert_equal("<{line:1 char:7 (6)}...{line:2 char:7 (28)}>", stmt.range.to_s)
+
+    stmt = ast.pointcut(FunctionBodyNode).matches.first
+    assert_equal("<{line:1 char:21 (20)}...{line:2 char:7 (28)}>", stmt.range.to_s)
+  end
 end

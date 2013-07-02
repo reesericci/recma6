@@ -87,15 +87,15 @@ rule
     }
   | STRING ':' AssignmentExpr { result = PropertyNode.new(val.first, val.last) }
   | NUMBER ':' AssignmentExpr { result = PropertyNode.new(val.first, val.last) }
-  | IDENT IDENT '(' ')' '{' FunctionBody '}'  {
+  | IDENT IDENT '(' ')' FunctionBody  {
       klass = property_class_for(val.first)
       yyabort unless klass
-      result = klass.new(val[1], FunctionExprNode.new(nil, val[5]))
+      result = klass.new(val[1], FunctionExprNode.new(nil, val[4]))
     }
-  | IDENT IDENT '(' FormalParameterList ')' '{' FunctionBody '}' {
+  | IDENT IDENT '(' FormalParameterList ')' FunctionBody {
       klass = property_class_for(val.first)
       yyabort unless klass
-      result = klass.new(val[1], FunctionExprNode.new(nil, val[6], val[3]))
+      result = klass.new(val[1], FunctionExprNode.new(nil, val[5], val[3]))
     }
   ;
 
@@ -806,31 +806,31 @@ rule
   ;
 
   FunctionDeclaration:
-    FUNCTION IDENT '(' ')' '{' FunctionBody '}' {
-      result = FunctionDeclNode.new(val[1], val[5])
+    FUNCTION IDENT '(' ')' FunctionBody {
+      result = FunctionDeclNode.new(val[1], val[4])
       debug(val[5])
     }
-  | FUNCTION IDENT '(' FormalParameterList ')' '{' FunctionBody '}' {
-      result = FunctionDeclNode.new(val[1], val[6], val[3])
+  | FUNCTION IDENT '(' FormalParameterList ')' FunctionBody {
+      result = FunctionDeclNode.new(val[1], val[5], val[3])
       debug(val[6])
     }
   ;
 
   FunctionExpr:
-    FUNCTION '(' ')' '{' FunctionBody '}' {
-      result = FunctionExprNode.new(val[0], val[4])
+    FUNCTION '(' ')' FunctionBody {
+      result = FunctionExprNode.new(val[0], val[3])
       debug(val[4])
     }
-  | FUNCTION '(' FormalParameterList ')' '{' FunctionBody '}' {
-      result = FunctionExprNode.new(val[0], val[5], val[2])
+  | FUNCTION '(' FormalParameterList ')' FunctionBody {
+      result = FunctionExprNode.new(val[0], val[4], val[2])
       debug(val[5])
     }
-  | FUNCTION IDENT '(' ')' '{' FunctionBody '}' {
-      result = FunctionExprNode.new(val[1], val[5])
+  | FUNCTION IDENT '(' ')' FunctionBody {
+      result = FunctionExprNode.new(val[1], val[4])
       debug(val[5])
     }
-  | FUNCTION IDENT '(' FormalParameterList ')' '{' FunctionBody '}' {
-      result = FunctionExprNode.new(val[1], val[6], val[3])
+  | FUNCTION IDENT '(' FormalParameterList ')' FunctionBody {
+      result = FunctionExprNode.new(val[1], val[5], val[3])
       debug(val[6])
     }
   ;
@@ -843,7 +843,7 @@ rule
   ;
 
   FunctionBody:
-    SourceElements              { result = FunctionBodyNode.new(val[0]) }
+    '{' SourceElements '}'              { result = FunctionBodyNode.new(val[1]) }
   ;
 end
 
