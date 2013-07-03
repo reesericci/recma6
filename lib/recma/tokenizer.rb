@@ -103,7 +103,24 @@ module RECMA
       # (eg, // and //g). Here we could depend on match length and priority to
       # determine that these are actually comments, but it turns out to be
       # easier to not match them in the first place.
-      token(:REGEXP, /\/(?:[^\/\r\n\\*]|\\[^\r\n])[^\/\r\n\\]*(?:\\[^\r\n][^\/\r\n\\]*)*\/[gim]*/, ['/'])
+      token(:REGEXP, %r{
+             /                  (?# beginning )
+
+             (?:                (?# normal char or escape sequence, but not * char )
+               [^/\r\n\\*]
+               |
+               \\[^\r\n]
+             )
+
+             [^/\r\n\\]*        (?# normal char )
+
+             (?:
+               \\ [^\r\n]       (?# escape sequence )
+               [^/\r\n\\]*      (?# normal char )
+             )*
+
+             /[gim]*            (?# ending + modifiers )
+      }x, ['/'])
 
       literal_chars = LITERALS.keys.map {|k| k.slice(0,1) }.uniq
       literal_regex = Regexp.new(LITERALS.keys.sort_by { |x|
