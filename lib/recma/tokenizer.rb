@@ -106,18 +106,11 @@ module RECMA
       token(:REGEXP, %r{
              /                  (?# beginning )
 
-             (?:                (?# normal char or escape sequence, but not * char )
-               [^/\r\n\\*]
-               |
-               \\[^\r\n]
-             )
-
-             [^/\r\n\\]*        (?# normal char )
-
              (?:
                \\ [^\r\n]       (?# escape sequence )
-               [^/\r\n\\]*      (?# normal char )
-             )*
+               |
+               [^/\r\n\\]+      (?# normal char )
+             )+
 
              /[gim]*            (?# ending + modifiers )
       }x, ['/'])
