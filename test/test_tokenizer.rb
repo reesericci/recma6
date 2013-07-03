@@ -98,6 +98,16 @@ class TokenizerTest < Test::Unit::TestCase
     ], tokens)
   end
 
+  def test_regular_expression_with_slash_inside_charset
+    tokens = @tokenizer.tokenize('foo = /[/]/;')
+    assert_tokens([
+                 [:IDENT, 'foo'],
+                 ['=', '='],
+                 [:REGEXP, '/[/]/'],
+                 [';', ';'],
+    ], tokens)
+  end
+
   def test_regular_expression_is_not_found_if_prev_token_implies_division
     {:IDENT => 'foo',
      :TRUE => 'true',

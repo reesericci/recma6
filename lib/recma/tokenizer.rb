@@ -107,9 +107,12 @@ module RECMA
              /                  (?# beginning )
 
              (?:
-               \\ [^\r\n]       (?# escape sequence )
+               [^\r\n\[/\\]+      (?# any char except \r \n [ / \ )
                |
-               [^/\r\n\\]+      (?# normal char )
+               \\ [^\r\n]         (?# escape sequence )
+               |
+               \[ (?:[^\]\\]|\\.)* \]   (?# [...] can contain any char including / )
+                                        (?# only \ and ] have to be escaped here )
              )+
 
              /[gim]*            (?# ending + modifiers )
