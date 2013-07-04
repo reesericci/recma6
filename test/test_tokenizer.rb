@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 require File.dirname(__FILE__) + "/helper"
 
 class TokenizerTest < Test::Unit::TestCase
@@ -159,6 +160,26 @@ class TokenizerTest < Test::Unit::TestCase
                  [:IDENT, 'foo'],
                  ['=', '='],
                  [:COMMENT, '//;'],
+    ], tokens)
+  end
+
+  def test_unicode_string
+    tokens = @tokenizer.tokenize("foo = 'öäüõ';")
+    assert_tokens([
+                 [:IDENT, 'foo'],
+                 ['=', '='],
+                 [:STRING, "'öäüõ'"],
+                 [';', ';'],
+    ], tokens)
+  end
+
+  def test_unicode_regex
+    tokens = @tokenizer.tokenize("foo = /öäüõ/;")
+    assert_tokens([
+                 [:IDENT, 'foo'],
+                 ['=', '='],
+                 [:REGEXP, "/öäüõ/"],
+                 [';', ';'],
     ], tokens)
   end
 
