@@ -80,7 +80,7 @@ module RECMA
 
       token(:COMMENT, /\/(?:\*(?:.)*?\*\/|\/[^\n]*)/m, ['/'])
       token(:STRING, /"(?:[^"\\]*(?:\\.[^"\\]*)*)"|'(?:[^'\\]*(?:\\.[^'\\]*)*)'/m, ["'", '"'])
-      token(:S, /[\s\r\n]*/m, [" ", "\t", "\r", "\n", "\f"])
+      token(:S, /\s*/m, [" ", "\t", "\r", "\n", "\f"])
 
       # A regexp to match floating point literals (but not integer literals).
       digits = ('0'..'9').to_a
