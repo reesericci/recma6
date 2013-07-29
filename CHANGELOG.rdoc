@@ -20,6 +20,14 @@
 
   * Fixed nondeterministic file order loading issue.
 
+=== 0.0.3
+
+* Add RKelly::Parser#stopped_at method for error reporting.
+
+=== 0.0.2
+
+* Handle multibyte characters without crashing.
+
 === 0.0.1
 
 * A fork of RKelly
