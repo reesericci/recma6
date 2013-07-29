@@ -49,6 +49,20 @@ module RECMA
       raise "something bad happened, please report a bug with sample JavaScript"
     end
 
+    # When parsing finishes without all tokens being parsed, returns
+    # the token at which the parsing stopped.  Returns nil when parser
+    # reached to the very last token (but possibly still failed as it
+    # expeced more tokens).
+    #
+    # Useful for pin-pointing the position of a syntax error.
+    def stopped_at
+      if @position < @tokens.length
+        @tokens[@position-1]
+      else
+        nil
+      end
+    end
+
     private
     def on_error(error_token_id, error_value, value_stack)
       if logger
