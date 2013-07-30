@@ -10,6 +10,9 @@ token BREAK CASE CATCH CONST CONTINUE DEBUGGER DEFAULT DELETE DO ELSE
 token FINALLY FOR FUNCTION IF IN INSTANCEOF NEW RETURN SWITCH THIS THROW TRY
 token TYPEOF VAR VOID WHILE WITH
 
+/* reserved keywords */
+token RESERVED
+
 /* punctuators */
 token EQEQ NE                     /* == and != */
 token STREQ STRNEQ                /* === and !== */
@@ -82,21 +85,30 @@ rule
   ;
 
   Property:
-    IDENT ':' AssignmentExpr {
+    IdentName ':' AssignmentExpr {
       result = PropertyNode.new(val[0], val[2])
     }
   | STRING ':' AssignmentExpr { result = PropertyNode.new(val.first, val.last) }
   | NUMBER ':' AssignmentExpr { result = PropertyNode.new(val.first, val.last) }
-  | IDENT IDENT '(' ')' FunctionBody  {
+  | IDENT IdentName '(' ')' FunctionBody  {
       klass = property_class_for(val.first)
       yyabort unless klass
       result = klass.new(val[1], FunctionExprNode.new(nil, val[4]))
     }
-  | IDENT IDENT '(' FormalParameterList ')' FunctionBody {
+  | IDENT IdentName '(' FormalParameterList ')' FunctionBody {
       klass = property_class_for(val.first)
       yyabort unless klass
       result = klass.new(val[1], FunctionExprNode.new(nil, val[5], val[3]))
     }
+  ;
+
+  IdentName:
+    IDENT
+  | NULL | TRUE | FALSE
+  | BREAK | CASE | CATCH | CONST | CONTINUE | DEBUGGER | DEFAULT | DELETE | DO | ELSE
+  | FINALLY | FOR | FUNCTION | IF | IN | INSTANCEOF | NEW | RETURN | SWITCH | THIS | THROW | TRY
+  | TYPEOF | VAR | VOID | WHILE | WITH
+  | RESERVED
   ;
 
   PropertyList:
@@ -150,7 +162,7 @@ rule
     PrimaryExpr
   | FunctionExpr
   | MemberExpr '[' Expr ']' { result = BracketAccessorNode.new(val[0], val[2]) }
-  | MemberExpr '.' IDENT    { result = DotAccessorNode.new(val[0], val[2]) }
+  | MemberExpr '.' IdentName { result = DotAccessorNode.new(val[0], val[2]) }
   | NEW MemberExpr Arguments { result = NewExprNode.new(val[1], val[2]) }
   ;
 
@@ -159,7 +171,7 @@ rule
   | MemberExprNoBF '[' Expr ']' {
       result = BracketAccessorNode.new(val[0], val[2])
     }
-  | MemberExprNoBF '.' IDENT    { result = DotAccessorNode.new(val[0], val[2]) }
+  | MemberExprNoBF '.' IdentName { result = DotAccessorNode.new(val[0], val[2]) }
   | NEW MemberExpr Arguments    { result = NewExprNode.new(val[1], val[2]) }
   ;
 
@@ -177,7 +189,7 @@ rule
     MemberExpr Arguments  { result = FunctionCallNode.new(val[0], val[1]) }
   | CallExpr Arguments    { result = FunctionCallNode.new(val[0], val[1]) }
   | CallExpr '[' Expr ']' { result = BracketAccessorNode.new(val[0], val[2]) }
-  | CallExpr '.' IDENT    { result = DotAccessorNode.new(val[0], val[2]) }
+  | CallExpr '.' IdentName { result = DotAccessorNode.new(val[0], val[2]) }
   ;
 
   CallExprNoBF:
@@ -185,7 +197,7 @@ rule
   | MemberExprNoBF Arguments  { result = FunctionCallNode.new(val[0], val[1]) }
   | CallExprNoBF Arguments    { result = FunctionCallNode.new(val[0], val[1]) }
   | CallExprNoBF '[' Expr ']' { result = BracketAccessorNode.new(val[0], val[2]) }
-  | CallExprNoBF '.' IDENT    { result = DotAccessorNode.new(val[0], val[2]) }
+  | CallExprNoBF '.' IdentName { result = DotAccessorNode.new(val[0], val[2]) }
   ;
 
   Arguments:
