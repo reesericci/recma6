@@ -27,6 +27,13 @@ module RECMA
         other.is_a?(self.class) && @value === other.value
       end
 
+      # Matches nodes with the given pattern (usually a class name of
+      # the node) and returns an instance of PointcutVisitor on which
+      # #matches can be invoked to get the list of AST nodes that
+      # matched.
+      #
+      #     ast.pointcut(RKelly::Nodes::IfNode).matches --> array of nodes
+      #
       def pointcut(pattern)
         case pattern
         when String
@@ -44,14 +51,24 @@ module RECMA
       end
       alias :/ :pointcut
 
+      # Generates an s-expression data structure like so:
+      #
+      #     "var x = 10;" --> [:var, [[:var_decl, :x, [:assign, [:lit, 10]]]]]]
+      #
       def to_sexp
         SexpVisitor.new.accept(self)
       end
 
+      # Generates formatted and intented JavaScript source code.
       def to_ecma
         ECMAVisitor.new.accept(self)
       end
 
+      # Generates a graph description in DOT language.  This can be
+      # fed into the dot program to generate a graph of the AST:
+      #
+      #     $ dot -Tpng generated-graph.dot -o graph.png
+      #
       def to_dots
         visitor = DotVisitor.new
         visitor.accept(self)
@@ -74,10 +91,13 @@ edge [ ];
         "#{header}\n#{nodes}\n#{arrows}\n}"
       end
 
+      # Loops through all the syntax nodes.
       def each(&block)
         EnumerableVisitor.new(block).accept(self)
       end
 
+      # This CRASHES!
+      # It calls method #s which is nowhere to be found.
       def to_real_sexp
         RealSexpVisitor.new.accept(self)
       end
