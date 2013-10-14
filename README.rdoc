@@ -58,7 +58,7 @@ RKelly:
 * 20 x faster in Ruby 1.8.
 * 2 x faster in Ruby 1.9 and 2.0.
 
-=== Correct start/end position data for all syntax nodex.
+=== Correct start/end position data for all syntax nodes
 
 Original RKelly only had a rudimentary support for getting the line
 number of an AST node, and even that was often wrong.
