@@ -2,6 +2,7 @@
 
 * http://recma.rubyforge.org/
 
+<<<<<<< HEAD
 == DESCRIPTION
 
 The RECMA library will parse JavaScript and return a parse tree.
@@ -15,12 +16,21 @@ The RECMA library will parse JavaScript and return a parse tree.
 
 RECMA6 is a merged fork of the RECMA[https://github.com/tenderlove/recma] and RKelly Remix JavaScript parsers.
 
+== Install
+
+  gem install rkelly-remix
+
+Note that you can't have rkelly and rkelly-remix both installed at the
+same time.  That would cause a conflict since they're both included
+with:
+
+  require 'rkelly'
 
 == Example
 
   # Iterate over and modify a JavaScript AST.  Then print the modified
   # AST as JavaScript.
-  require 'rkelly-remix'
+  require 'rkelly'
 
   parser = RKelly::Parser.new
   ast    = parser.parse(
@@ -49,7 +59,7 @@ release was in late 2012, and since then the author has not responded
 to bug reports or pull requests.
 
 I created this fork mainly to satisfy the needs of my
-[JSDuck]https://github.com/senchalabs/jsduck project, but you too
+JSDuck[https://github.com/senchalabs/jsduck] project, but you too
 should consider using it, as it fixes several problems in the original
 RKelly:
 
@@ -93,7 +103,7 @@ node, but failed to correctly do so, which is understandable, as there
 is no standard way to do such a mapping.  RKelly Remix abandons this
 and just lists all commenst in the root node, leaving the user with
 the task of associating them with AST nodes if he desires so (the same
-approach is taken by another JS parser: [Esprima]http://esprima.org/ ).
+approach is taken by another JS parser: Esprima[http://esprima.org] ).
 
   parser = RKelly::Parser.new
   ast = parser.parse(<<-eojs)
