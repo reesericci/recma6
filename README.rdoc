@@ -1,8 +1,5 @@
 = RECMA
 
-* http://recma.rubyforge.org/
-
-<<<<<<< HEAD
 == DESCRIPTION
 
 The RECMA library will parse JavaScript and return a parse tree.

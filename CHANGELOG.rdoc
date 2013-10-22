@@ -20,6 +20,11 @@
 
   * Fixed nondeterministic file order loading issue.
 
+=== 0.0.5
+
+* Update list of reserved words to match ECMAScript 5
+* Fix ecma visitor for function expressions with name
+
 === 0.0.4
 
 * Allow use of keywords in property names.
