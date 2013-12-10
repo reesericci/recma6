@@ -1,7 +1,7 @@
-require 'rkelly/lexeme'
+require 'recma/lexeme'
 require 'strscan'
 
-module RKelly
+module RECMA
   class Tokenizer
     KEYWORDS = %w{
       break case catch continue default delete do else finally for function

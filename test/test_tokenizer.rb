@@ -6,6 +6,43 @@ class TokenizerTest < Test::Unit::TestCase
     @tokenizer = RECMA::Tokenizer.new
   end
 
+  {
+    :space  => " ",
+    :tab => "\t",
+    :form_feed  => "\f",
+    :vertical_tab  => "\v",
+    :no_break_space  => [0x00A0].pack("U"),
+    :ogham_space_mark => [0x1680].pack("U"),
+    :en_quad => [0x2000].pack("U"),
+    :em_quad => [0x2001].pack("U"),
+    :en_space => [0x2002].pack("U"),
+    :em_space => [0x2003].pack("U"),
+    :three_per_em_space => [0x2004].pack("U"),
+    :four_per_em_space => [0x2005].pack("U"),
+    :six_per_em_space => [0x2006].pack("U"),
+    :figure_space => [0x2007].pack("U"),
+    :punctuation_space => [0x2008].pack("U"),
+    :thin_space => [0x2009].pack("U"),
+    :hair_space => [0x200a].pack("U"),
+    :narrow_no_break_space => [0x202f].pack("U"),
+    :medium_mathematical_space => [0x205f].pack("U"),
+    :ideographic_space => [0x3000].pack("U"),
+
+    # Line terminators
+    :newline  => "\n",
+    :carriage_return  => "\r",
+    :line_separator => [0x2028].pack("U"),
+    :paragraph_separator => [0x2029].pack("U"),
+  }.each do |name, char|
+    define_method(:"test_whitespace_#{name}") do
+      assert_equal([[:S, char]], @tokenizer.tokenize(char))
+    end
+  end
+
+  def assert_tokens(expected, actual)
+    assert_equal(expected, actual.select { |x| x[0] != :S })
+  end
+
   def test_comments
     tokens = @tokenizer.tokenize("/** Fooo */")
     assert_tokens([[:COMMENT, '/** Fooo */']], tokens)
@@ -181,10 +218,6 @@ class TokenizerTest < Test::Unit::TestCase
                  [:REGEXP, "/öäüõ/"],
                  [';', ';'],
     ], tokens)
-  end
-
-  def assert_tokens(expected, actual)
-    assert_equal(expected, actual.select { |x| x[0] != :S })
   end
 
   %w{
