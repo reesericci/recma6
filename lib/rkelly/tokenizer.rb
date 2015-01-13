@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
-require 'recma/lexeme'
-require 'recma/char_range'
+require 'rkelly/lexeme'
+require 'rkelly/char_range'
 require 'strscan'
 
-module RECMA
+module RKelly
   class Tokenizer
     KEYWORDS = Hash[%w{
       break case catch continue default delete do else finally for function
@@ -14,7 +14,7 @@ module RECMA
     }.map {|kw| [kw, kw.upcase.to_sym] }]
 
     # These 6 are always reserved in ECMAScript 5.1
-    # Some others are only reserved in strict mode, but RECMA doesn't
+    # Some others are only reserved in strict mode, but RKelly doesn't
     # differenciate between strict and non-strict mode code.
     # http://www.ecma-international.org/ecma-262/5.1/#sec-7.6.1.2
     # https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Reserved_Words

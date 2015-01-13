@@ -233,6 +233,28 @@ class TokenizerTest < Test::Unit::TestCase
       assert_equal([[kw.upcase.to_sym, kw]], tokens)
     end
   end
+
+  %w{
+    class enum extends super export import
+  }.each do |rw|
+    define_method(:"test_future_reserved_word_#{rw}_is_reserved") do
+      tokens = @tokenizer.tokenize(rw)
+      assert_equal 1, tokens.length
+      assert_equal([[:RESERVED, rw]], tokens)
+    end
+  end
+
+  %w{
+    implements let private public yield
+    interface package protected static
+  }.each do |rw|
+    define_method(:"test_future_reserved_word_#{rw}_is_identifier") do
+      tokens = @tokenizer.tokenize(rw)
+      assert_equal 1, tokens.length
+      assert_equal([[:IDENT, rw]], tokens)
+    end
+  end
+
   {
     '=='  => :EQEQ,
     '!='  => :NE,
