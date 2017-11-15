@@ -131,7 +131,7 @@ module RKelly
         value.gsub!(/^\./, '0.') if value =~ /^\./
         [type, eval(value)]
       end
-      token(:NUMBER, /0[xX][\da-fA-F]+|0[0-7]*|\d+/, digits) do |type, value|
+      token(:NUMBER, /0[xX][\da-fA-F]+|0[oO][0-7]+|0[0-7]*|\d+/, digits) do |type, value|
         [type, eval(value)]
       end
 
