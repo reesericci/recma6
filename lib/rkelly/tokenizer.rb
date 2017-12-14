@@ -167,7 +167,7 @@ module RKelly
                                         (?# only \ and ] have to be escaped here )
              )+
 
-             /[gim]*            (?# ending + modifiers )
+             /[gimuy]*          (?# ending + modifiers )
       }x, ['/'])
 
       literal_chars = LITERALS.keys.map {|k| k.slice(0,1) }.uniq
