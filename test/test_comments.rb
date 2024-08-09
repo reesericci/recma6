@@ -21,11 +21,7 @@ class CommentsTest < NodeTestCase
   end
 
   def test_only_comments
-<<<<<<< HEAD
-    parser = RKelly::Parser.new
-=======
     parser = RECMA::Parser.new
->>>>>>> tenderlove-master
     ast = parser.parse(<<-eojs)
       /**
        * The first comment
