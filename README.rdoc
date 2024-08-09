@@ -1,14 +1,4 @@
-<<<<<<< HEAD
-= RKelly Remix
-
-https://github.com/nene/rkelly-remix
-
-== DESCRIPTION
-
-RKelly Remix is a fork of the
-RKelly[https://github.com/tenderlove/rkelly] JavaScript parser.
-=======
-= RECMA
+= RECMA6
 
 == DESCRIPTION
 
@@ -22,7 +12,6 @@ The RECMA library will parse JavaScript and return a parse tree.
   parser = RECMA::Parser.new
 
 RECMA6 is a merged fork of the RECMA[https://github.com/tenderlove/recma] and RKelly Remix JavaScript parsers.
->>>>>>> tenderlove-master
 
 == Install
 
@@ -32,7 +21,7 @@ Note that you can't have rkelly and rkelly-remix both installed at the
 same time.  That would cause a conflict since they're both included
 with:
 
-  require 'rkelly'
+  require 'recma'
 
 == Example
 
